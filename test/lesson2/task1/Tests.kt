@@ -1,6 +1,6 @@
 package lesson2.task1
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 
@@ -18,7 +18,7 @@ class Tests {
 
     @Test
     @Tag("Easy")
-    fun ageDescription() {
+    fun ageDescription(i: Int) {
         assertEquals("1 год", ageDescription(1))
         assertEquals("21 год", ageDescription(21))
         assertEquals("132 года", ageDescription(132))
@@ -34,6 +34,8 @@ class Tests {
         assertEquals(3.67, timeForHalfWay(4.0, 3.0, 1.0, 4.0, 1.0, 6.0), 1e-2)
         assertEquals(4.4, timeForHalfWay(3.0, 0.0, 1.0, 6.0, 2.0, 5.0), 1e-2)
     }
+
+    private fun assertEquals(d: Double, timeForHalfWay: Unit, d1: Double) {}
 
     @Test
     @Tag("Easy")
