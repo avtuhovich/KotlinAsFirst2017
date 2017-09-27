@@ -1,7 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson1.task1
 
-import java.lang.Math.*
+import java.lang.Math.sqrt
 
 /**
  * Пример
@@ -93,7 +93,7 @@ fun thirdDigit(number: Int): Int = (number / 100) % 10
  * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
-fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int = ((hoursDepart * 60 + minutesDepart) - ((hoursArrive * 60 + minutesArrive))
+fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int = (hoursDepart * 60 + minutesDepart) - (hoursArrive * 60 + minutesArrive)
 
 /**
  * Простая
@@ -102,7 +102,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Int): Double = initial * (1 + (percent / 100) * 3)
+fun accountInThreeYears(initial: Int, percent: Int): Double = initial * (1 + (percent / 100.0) * 3)
 
 /**
  * Простая
