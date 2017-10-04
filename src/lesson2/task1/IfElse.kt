@@ -36,7 +36,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
 fun ageDescription(age: Int): String {
     if (age % 10 <= 4 || age % 100 <= 4) return age.toString() + " год"
     else {
-        if (age < 21 || age % 10 == 0 || (age % 10 > 4 && age % 10 <= 9) || age > 110 && age < 121 || age % 100 == 0 || (age % 100 > 4 && age % 10 <= 9))
+        if (age < 21 || age % 10 == 0 || age > 110 && age < 121 || (age % 10 > 4 && age % 10 <= 9) || age % 100 == 0 || (age % 100 > 4 && age % 10 <= 9))
             return age.toString() + " лет"
         else
             return age.toString() + " года"
@@ -58,7 +58,7 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s3 = t3 * v3
     val s = (s1 + s2 + s3) / 2
     if (s <= s) s % v1 else
-        if (s > s1 && s < (s1 + s2)) t1 + (s - s1) % v2 else
+        if (s1 < s && s < (s1 + s2)) t1 + (s - s1) % v2 else
             t1 + t2 + (s - s1 - s2) / v3
 
 }
@@ -79,7 +79,7 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
         if (kingX == rookX1 || kingY == rookY1 && kingX == rookX2 || kingY == rookY2 && rookX1 != rookX2 && rookY1 != rookY2) {
             3
         } else
-            if (kingX == rookX1 || kingY == rookY1 && kingX != rookX2 && kingY != rookY2) {
+            if (kingX == rookX1 || kingY == rookY1 && kingY != rookY2 && kingX != rookX2) {
                 1
             } else if (kingX == rookX2 || kingY == rookY2 && kingX != rookX1 && kingY != rookY1) {
                 2
@@ -108,7 +108,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
             if (kingY == rookY || kingX == rookX && kingX != bishopX && kingY != bishopY) {
                 1
             } else
-                if (kingX - bishopX == 1 || kingX - bishopX == -1 && kingY - bishopY == 1 || kingY - bishopY == -1) {
+                if (kingX - bishopX == -1 || kingX - bishopX == 1 && kingY - bishopY == 1 || kingY - bishopY == -1) {
                     2
                 } else 0
 
@@ -128,7 +128,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int =
             if (a + b > c && a + c > b && b + c > a && a > b && a > b && a > c && a * a < b * b + c * c || b >= a && b > c && b * b < a * a + c * c || c > a && c > b && c * c < a * a + b * b) {
                 0
             } else
-                if (a + b > c && a + c > b && b + c > a && a > b && a > b && b == c && a * a == b * b + c * c || b > a && a == c && b * b == a * a + c * c || c > a && a == b && c * c == a * a + b * b) {
+                if (a + c > b && a + b > c && b + c > a && a > b && a > b && b == c && a * a == b * b + c * c || b > a && a == c && b * b == a * a + c * c || c > a && a == b && c * c == a * a + b * b) {
                     1
                 } else -1
 
@@ -148,7 +148,7 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
             if (a <= c && d <= b && c <= d && a <= b) {
                 d - c
             } else
-                if (a <= c && b <= d && c <= b && a <= d) {
+                if (b <= d && a <= c && c <= b && a <= d) {
                     b - c
                 } else
                     if (c <= a && a <= d && d <= b && c <= b) {
