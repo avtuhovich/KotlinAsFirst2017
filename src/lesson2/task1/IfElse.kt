@@ -33,14 +33,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-
 fun ageDescription(age: Int): String {
-    if (age % 100 < 10 || age % 100 > 20)
-        if (age % 10 <= 4) return age.toString() + "года" else
-            if (age < 21 || age % 10 == 0 || age % 10 <= 9 || age > 110 && age < 121)
-                return age.toString() + "лет"
-            else
-                return age.toString() + "год"
+    if (age % 10 <= 4 || age % 100 <= 4) return age.toString() + " год"
+    else {
+        if (age < 21 || age % 10 == 0 || (age % 10 > 4 && age % 10 <= 9) || age > 110 && age < 121 || age % 100 == 0 || (age % 100 > 4 && age % 10 <= 9))
+            return age.toString() + " лет"
+        else
+            return age.toString() + " года"
+    }
 }
 
 /**
@@ -75,7 +75,18 @@ fun timeForHalfWay(t1: Double, v1: Double,
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int = TODO()
+                       rookX2: Int, rookY2: Int) =
+        if (kingX == rookX1 || kingY == rookY1 && kingX == rookX2 || kingY == rookY2 && rookX1 != rookX2 && rookY1 != rookY2) {
+            3
+        } else
+            if (kingX == rookX1 || kingY == rookY1 && kingX != rookX2 && kingY != rookY2) {
+                1
+            } else if (kingX == rookX2 || kingY == rookY2 && kingX != rookX1 && kingY != rookY1) {
+                2
+            } else 0
+
+
+
 
 
 /**
@@ -90,17 +101,37 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int = TODO()
+                          bishopX: Int, bishopY: Int): Int =
+        if (kingX - bishopX == 1 || kingX - bishopX == -1 && kingY - bishopY == 1 || kingY - bishopY == -1 && kingX == rookX || kingY == rookY && bishopX != rookX && bishopY != rookY) {
+            3
+        } else
+            if (kingY == rookY || kingX == rookX && kingX != bishopX && kingY != bishopY) {
+                1
+            } else
+                if (kingX - bishopX == 1 || kingX - bishopX == -1 && kingY - bishopY == 1 || kingY - bishopY == -1) {
+                    2
+                } else 0
+
 
 /**
- * Простая
+Простая
  *
  * Треугольник задан длинами своих сторон a, b, c.
  * Проверить, является ли данный треугольник остроугольным (вернуть 0),
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int =
+        if (a + b > c && a + c > b && b + c > a && a > b && a > c && a * a > b * b + c * c || b > a && b > c && b * b > a * a + c * c || c > a && c > b && c * c > a * a + b * b) {
+            2
+        } else
+            if (a + b > c && a + c > b && b + c > a && a > b && a > b && a > c && a * a < b * b + c * c || b >= a && b > c && b * b < a * a + c * c || c > a && c > b && c * c < a * a + b * b) {
+                0
+            } else
+                if (a + b > c && a + c > b && b + c > a && a > b && a > b && b == c && a * a == b * b + c * c || b > a && a == c && b * b == a * a + c * c || c > a && a == b && c * c == a * a + b * b) {
+                    1
+                } else -1
+
 
 /**
  * Средняя
@@ -110,5 +141,16 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
+        if (c <= a && b <= d && a <= b && c <= d) {
+            b - a
+        } else
+            if (a <= c && d <= b && c <= d && a <= b) {
+                d - c
+            } else
+                if (a <= c && b <= d && c <= b && a <= d) {
+                    b - c
+                } else
+                    if (c <= a && a <= d && d <= b && c <= b) {
+                        d - a
+                    } else -1
