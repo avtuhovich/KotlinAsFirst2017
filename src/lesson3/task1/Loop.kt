@@ -60,8 +60,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Найти количество цифр в заданном числе n.
  * Например, число 1 содержит 1 цифру, 456 -- 3 цифры, 65536 -- 5 цифр.
  */
-fun digitNumber(n: Int): Int = TODO()
-
+fun digitNumber(n: Int): Int {
+    var k = 0
+    var n = n
+    while (n >= 0) {
+        n % 10
+        k++
+    }
+    n /= 10
+    return k
+}
 /**
  * Простая
  *
