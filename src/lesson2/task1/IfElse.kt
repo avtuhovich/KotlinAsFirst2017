@@ -101,16 +101,8 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int =
-        if (kingX - bishopX == 1 || kingX - bishopX == -1 && kingY - bishopY == 1 || kingY - bishopY == -1 && kingX == rookX || kingY == rookY && bishopX != rookX && bishopY != rookY) {
-            3
-        } else
-            if (kingY == rookY || kingX == rookX && kingX != bishopX && kingY != bishopY) {
-                1
-            } else
-                if (kingX - bishopX == -1 || kingX - bishopX == 1 && kingY - bishopY == 1 || kingY - bishopY == -1) {
-                    2
-                } else 0
+                          bishopX: Int, bishopY: Int): Int = TODO()
+
 
 
 /**
@@ -121,16 +113,8 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int =
-        if (a + b > c && a + c > b && b + c > a && a > b && a > c && a * a > b * b + c * c || b > a && b > c && b * b > a * a + c * c || c > a && c > b && c * c > a * a + b * b) {
-            2
-        } else
-            if (a + b > c && a + c > b && b + c > a && a > b && a > b && a > c && a * a < b * b + c * c || b >= a && b > c && b * b < a * a + c * c || c > a && c > b && c * c < a * a + b * b) {
-                0
-            } else
-                if (a + c > b && a + b > c && b + c > a && a > b && a > b && b == c && a * a == b * b + c * c || b > a && a == c && b * b == a * a + c * c || c > a && a == b && c * c == a * a + b * b) {
-                    1
-                } else -1
+fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+
 
 
 /**
