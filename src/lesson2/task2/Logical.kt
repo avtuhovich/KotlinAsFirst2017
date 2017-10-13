@@ -27,9 +27,8 @@ fun isNumberHappy(number: Int): Boolean =
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
-
-
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+        x1 == x2 || y1 == y2 || Math.abs(x1 - x2) == Math.abs(y1 - y2)
 /**
  * Средняя
  *
@@ -38,10 +37,8 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Вернуть true, если утверждение верно
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
-                 x2: Double, y2: Double, r2: Double): Boolean = TODO()
-
-
-
+                 x2: Double, y2: Double, r2: Double): Boolean =
+        Math.sqrt(sqr(x1 - x2) + sqr(y1 - y2)) + r1 <= r2
 
 
 /**
@@ -53,7 +50,6 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-
 
 
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()

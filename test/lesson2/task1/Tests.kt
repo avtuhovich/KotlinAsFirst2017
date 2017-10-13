@@ -35,8 +35,6 @@ class Tests {
         assertEquals(4.4, timeForHalfWay(3.0, 0.0, 1.0, 6.0, 2.0, 5.0), 1e-2)
     }
 
-    private fun assertEquals(d: Double, timeForHalfWay: Unit, d1: Double) {}
-
     @Test
     @Tag("Easy")
     fun whichRookThreatens() {
