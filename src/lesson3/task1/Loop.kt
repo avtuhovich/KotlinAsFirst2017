@@ -60,20 +60,29 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Найти количество цифр в заданном числе n.
  * Например, число 1 содержит 1 цифру, 456 -- 3 цифры, 65536 -- 5 цифр.
  */
-/**
-fun digitNumber(n: Int): Int {
-val n = n
-n.toString().length
-return n
-}
- */
-/**
- * Простая
+
+fun digitNumber(n: Int): Int =
+        if ((n in 0..9) || (n in -9..0)) {
+            1
+        } else
+            digitNumber(n / 10) + 1
+
+/** Простая
  *
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var fib1 = 1
+    var fib2 = 1
+    var fibx = 1
+    for (i in 3..n) {
+        fibx = fib1 + fib2
+        fib1 = fib2
+        fib2 = fibx
+    }
+    return fibx
+}
 /**
  * Простая
  *
@@ -97,13 +106,19 @@ fun lcm(m: Int, n: Int): Int {
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var i = 2
+    while (n % i != 0) {
+        i++
+    }
+    return i
+}
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 /**
  * Простая
  *
@@ -160,20 +175,16 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Не использовать строки при решении задачи.
  */
 
-fun revert(n: Int): Int = TODO()
-/**
-{
-val n = n
-val newN = 0
-while (n >= 0) {
-for (i in 1..n){
-newN == 10 * newN + n % 10
-n == n / 10
+fun revert(n: Int): Int {
+    var newN = 0
+    var n = n
+    while (n > 0) {
+        newN = newN * 10 + n % 10
+        n /= 10
+    }
+    return newN
 }
-}
-return newN
-}
- */
+
 /**
  * Средняя
  *
@@ -182,19 +193,8 @@ return newN
  * 15751 -- палиндром, 3653 -- нет.
  */
 
-fun isPalindrome(n: Int): Boolean = TODO()
-/**{
-val n = n
-val newN = 0
-for (i in 1..n) {
-val m= n
-newN == 10*newN + n%10
-m == m/10
-}
-return newN == n
-}
+fun isPalindrome(n: Int): Boolean = revert(n) == n
 
- */
 /**
  * Средняя
  *
@@ -202,7 +202,18 @@ return newN == n
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
 
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var ost = n % 10
+    var n = n
+    while (n > 0) {
+        if (n % 10 != ost) {
+            return true
+        } else {
+            n /= 10
+        }
+    }
+    return false
+}
 
 /**
  * Сложная
@@ -212,7 +223,21 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var i = 0
+    var num = 0
+    var res = 0
+    while (num < n) {
+        i++
+        num += digitNumber(i * i)
+    }
+    res = i * i
+    for (i in n..(num - 1)) {
+        res /= 10
+    }
+    res %= 10
+    return res
+}
 
 /**
  * Сложная
@@ -222,4 +247,18 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var i = 0
+    var num = 0
+    var res = 0
+    while (num < n) {
+        i++
+        num += digitNumber(fib(i))
+    }
+    res = fib(i)
+    for (i in n..(num - 1)) {
+        res /= 10
+    }
+    res %= 10
+    return res
+}
