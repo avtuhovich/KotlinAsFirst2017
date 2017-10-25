@@ -49,6 +49,7 @@ class Tests {
     fun lengthInMeters() {
         assertEquals(18.98, lengthInMeters(8, 2, 11), 1e-2)
         assertEquals(2.13, lengthInMeters(1, 0, 0), 1e-2)
+        assertEquals(762.0508000000001, lengthInMeters(326, 92, 24), 1e-2)
     }
 
     @Test
