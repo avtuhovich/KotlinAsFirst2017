@@ -53,8 +53,8 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
 
 
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val min = minOf(a.toDouble(), b.toDouble(), c.toDouble())
-    val max = maxOf(a.toDouble(), b.toDouble(), c.toDouble())
+    val min = minOf(a.toInt(), b.toInt(), c.toInt())
+    val max = maxOf(a.toInt(), b.toInt(), c.toInt())
     val mid = Math.abs(a + b + c) - min - max
     return s >= mid && r >= min || s >= min && r >= mid
 }

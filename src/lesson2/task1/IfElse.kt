@@ -75,7 +75,8 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int) = when {
-    (kingX == rookX1 || kingY == rookY1 && kingX == rookX2 || kingY == rookY2 && rookX1 != rookX2 && rookY1 != rookY2) -> 3
+    (kingX == rookX1 || kingY == rookY1 && kingX == rookX2 || kingY == rookY2
+            && rookX1 != rookX2 && rookY1 != rookY2) -> 3
     (kingX == rookX1 || kingY == rookY1 && kingY != rookY2 && kingX != rookX2) -> 1
     (kingX == rookX2 || kingY == rookY2 && kingX != rookX1 && kingY != rookY1) -> 2
     else -> 0
@@ -94,8 +95,10 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int = when {
-    (kingX == rookX || kingY == rookY && Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY) && rookX != bishopX && rookY != bishopY) -> 3
-    (Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY) && rookX != bishopX && rookY != bishopY) -> 2
+    (kingX == rookX || kingY == rookY && Math.abs(kingX - bishopX) ==
+            Math.abs(kingY - bishopY) && rookX != bishopX && rookY != bishopY) -> 3
+    (Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY) && rookX != bishopX
+            && rookY != bishopY) -> 2
     (kingX == rookX || kingY == rookY && rookX != bishopX && rookY != bishopY) -> 1
     else -> 0
 }
