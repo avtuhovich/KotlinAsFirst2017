@@ -338,8 +338,10 @@ fun russian(n: Int): String {
 fun thousands(ni: Int): String {
     val n0 = ni % 100
     val n1 = n0 % 10
-    if (n0 in 10..20) return "тысяч"
-    else if (n1 in 2..4) return "тысячи"
-    else if (n1 == 1) return "тысяча"
-    else return "тысяч"
+    return when {
+        (n0 in 10..20) -> "тысяч"
+        (n1 in 2..4) -> "тысячи"
+        (n1 == 1) -> "тысяча"
+        else -> "тысяч"
+    }
 }
