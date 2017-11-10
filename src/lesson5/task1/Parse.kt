@@ -122,7 +122,7 @@ fun dateDigitToStr(digital: String): String {
                 date == "06" && day in 1..31 -> " июня "
                 date == "07" && day in 1..32 -> " июля "
                 date == "08" && day in 1..32 -> " августа "
-                date == "09" && day in 1..31 -> " сентябя "
+                date == "09" && day in 1..31 -> " сентября "
                 date == "10" && day in 1..32 -> " октября "
                 date == "11" && day in 1..31 -> " ноября "
                 date == "12" && day in 1..32 -> " декабря "
