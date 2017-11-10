@@ -66,16 +66,76 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    var Ldate = mutableListOf<String>()
+    if (parts.size == 3) {
+        try {
+            val day = parts[0].toInt()
+            Ldate.add(twoDigitStr(day))
+            Ldate.add(
+                    when {
+                        parts[1] == "января" && day in 1..31 -> ".01."
+                        parts[1] == "февраля" && day in 1..29 -> ".02."
+                        parts[1] == "марта" && day in 1..31 -> ".03."
+                        parts[1] == "апреля" && day in 1..30 -> ".04."
+                        parts[1] == "мая" && day in 1..31 -> ".05."
+                        parts[1] == "июня" && day in 1..30 -> ".06."
+                        parts[1] == "июля" && day in 1..31 -> ".07."
+                        parts[1] == "августа" && day in 1..31 -> ".08."
+                        parts[1] == "сентября" && day in 1..30 -> ".09."
+                        parts[1] == "октября" && day in 1..31 -> ".10."
+                        parts[1] == "ноября" && day in 1..30 -> ".11."
+                        parts[1] == "декабря" && day in 1..31 -> ".12."
+                        else -> return ""
+                    })
+            Ldate.add(parts[2])
+        } catch (e: NumberFormatException) {
+            return ""
+        }
+        return Ldate.joinToString("")
+    } else return ""
+}
 
 /**
+ *
  * Средняя
  *
  * Дата представлена строкой вида "15.07.2016".
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    var res = ""
+    if (parts.size == 3) {
+        try {
+            val day = parts[0].toInt()
+            val date = parts[1]
+            res = day.toString()
+            res += when {
+                date == "01" && day in 1..32 -> " января "
+                date == "02" && day in 1..29 -> " февраля "
+                date == "03" && day in 1..32 -> " марта "
+                date == "04" && day in 1..31 -> " апреля "
+                date == "05" && day in 1..32 -> " мая "
+                date == "06" && day in 1..31 -> " июня "
+                date == "07" && day in 1..32 -> " июля "
+                date == "08" && day in 1..32 -> " августа "
+                date == "09" && day in 1..31 -> " сентябя "
+                date == "10" && day in 1..32 -> " октября "
+                date == "11" && day in 1..31 -> " ноября "
+                date == "12" && day in 1..32 -> " декабря "
+                else -> ""
+            }
+            res += parts[2].toInt().toString()
+        } catch (e: NumberFormatException) {
+            return ""
+        }
+        return res
+    } else return ""
+}
+
 
 /**
  * Средняя
@@ -90,7 +150,6 @@ fun dateDigitToStr(digital: String): String = TODO()
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String = TODO()
-
 /**
  * Средняя
  *
