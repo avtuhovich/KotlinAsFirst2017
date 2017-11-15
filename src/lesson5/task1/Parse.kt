@@ -126,7 +126,7 @@ fun dateDigitToStr(digital: String): String {
                 date == "10" && day in 1..32 -> " октября "
                 date == "11" && day in 1..31 -> " ноября "
                 date == "12" && day in 1..32 -> " декабря "
-                else -> ""
+                else -> return ""
             }
             res += parts[2].toInt().toString()
         } catch (e: NumberFormatException) {
@@ -149,7 +149,10 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    if (!phone.matches(Regex("""^\+?[ \d\(\)\-]{1,}$"""))) return ""
+    return phone.replace(Regex("""[ \(\)\-]"""), "")
+}
 /**
  * Средняя
  *
@@ -160,8 +163,19 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
-
+fun bestLongJump(jumps: String): Int {
+    var max = -1
+    if (!jumps.matches(Regex("""^[\d\-% ]{1,}$"""))) -1
+    if (jumps.matches(Regex("""[ \-%]$"""))) -1
+    val n = jumps.replace(Regex("""[%\-]"""), "").replace("  ", " ").split(" ")
+    n.filter { !it.isEmpty() }.forEach {
+        if (!it.all { it.isDigit() }) return -1
+        if (it.toInt() > max) {
+            max = it.toInt()
+        }
+    }
+    return max
+}
 /**
  * Сложная
  *
@@ -173,6 +187,7 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int = TODO()
+
 
 /**
  * Сложная
@@ -194,8 +209,17 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
-
+fun firstDuplicateIndex(str: String): Int {
+    var index = 0
+    var word = ""
+    for (part in str.toUpperCase().split("")) {
+        if (part != word) {
+            word = part
+            index += 1 + part.length
+        } else index = -1
+    }
+    return index
+}
 /**
  * Сложная
  *
