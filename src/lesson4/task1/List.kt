@@ -133,9 +133,9 @@ fun mean(list: List<Double>): Double =
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val mx = mean(list)
+    val arithmetic = mean(list)
     for (i in 0 until list.size) {
-        list[i] = list[i] - mx
+        list[i] = list[i] - arithmetic
     }
     return list
 }
@@ -165,11 +165,11 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Значение пустого многочлена равно 0.0 при любом x.
  */
 fun polynom(p: List<Double>, x: Double): Double {
-    var sump = 0.0
+    var sum_p = 0.0
     for (i in 0 until p.size) {
-        sump += p[i] * Math.pow(x, i.toDouble())
+        sum_p += p[i] * Math.pow(x, i.toDouble())
     }
-    return sump
+    return sum_p
 }
 
 /**
@@ -200,14 +200,14 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  */
 fun factorize(n: Int): List<Int> {
     var x = n
-    var i = 2
+    var num = 2
     val factorL = mutableListOf<Int>()
     while (x != 1) {
-        while (x % i == 0) {
-            factorL.add(i)
-            x /= i
+        while (x % num == 0) {
+            factorL.add(num)
+            x /= num
         }
-        i++
+        num++
     }
     return factorL
 }
@@ -295,16 +295,16 @@ fun russian(n: Int): String {
             "четыре", "пять", "шесть", "семь", "восемь", "девять"),
             listOf("", "одна", "две", "три", "четыре",
                     "пять", "шесть", "семь", "восемь", "девять"))
-    val number00 = listOf<String>("", "сто", "двести", "триста",
+    val number_hundreds = listOf<String>("", "сто", "двести", "триста",
             "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
     val number1119 = listOf<String>("", "десять", "одиннадцать", "двенадцать",
             "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
             "семнадцать", "восемнадцать", "девятнадцать", "двадцать")
-    val number0 = listOf<String>("", "десять", "двадцать", "тридцать",
+    val number_dozens = listOf<String>("", "десять", "двадцать", "тридцать",
             "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
     val part = mutableListOf<Int>()
     var newN = n
-    while (newN > 999) {
+    if (newN > 999) {
         val par = newN / 1000
         part.add(newN - par * 1000)
         newN = par
@@ -314,18 +314,18 @@ fun russian(n: Int): String {
     val res = mutableListOf<String>()
     var rank = part.size - 1
     for (ni in part) {
-        val numberi = rank
+        val number_i = rank
         val n1 = ni / 100
         val n21 = ni % 100
         val n2 = n21 / 10
         val n3 = ni % 10
-        if (ni > 99) res.add(number00[n1])
+        if (ni > 99) res.add(number_hundreds[n1])
         if (n21 > 20) {
-            res.add(number0[n2])
-            res.add(number[numberi][n3])
+            res.add(number_dozens[n2])
+            res.add(number[number_i][n3])
         } else {
             if (n21 > 9) res.add(number1119[n21 - 9])
-            else if (n21 in 1..9) res.add(number[numberi][n3])
+            else if (n21 in 1..9) res.add(number[number_i][n3])
         }
         if (rank == 1) {
             res.add(thousands(ni))

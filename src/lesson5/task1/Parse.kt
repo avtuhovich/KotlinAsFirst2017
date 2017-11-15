@@ -68,12 +68,12 @@ fun main(args: Array<String>) {
  */
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
-    var Ldate = mutableListOf<String>()
+    var L_date = mutableListOf<String>()
     if (parts.size == 3) {
         try {
             val day = parts[0].toInt()
-            Ldate.add(twoDigitStr(day))
-            Ldate.add(
+            L_date.add(twoDigitStr(day))
+            L_date.add(
                     when {
                         parts[1] == "января" && day in 1..31 -> ".01."
                         parts[1] == "февраля" && day in 1..29 -> ".02."
@@ -89,11 +89,11 @@ fun dateStrToDigit(str: String): String {
                         parts[1] == "декабря" && day in 1..31 -> ".12."
                         else -> return ""
                     })
-            Ldate.add(parts[2])
+            L_date.add(parts[2])
         } catch (e: NumberFormatException) {
             return ""
         }
-        return Ldate.joinToString("")
+        return L_date.joinToString("")
     } else return ""
 }
 
@@ -114,18 +114,18 @@ fun dateDigitToStr(digital: String): String {
             val date = parts[1]
             res = day.toString()
             res += when {
-                date == "01" && day in 1..32 -> " января "
-                date == "02" && day in 1..29 -> " февраля "
-                date == "03" && day in 1..32 -> " марта "
-                date == "04" && day in 1..31 -> " апреля "
-                date == "05" && day in 1..32 -> " мая "
-                date == "06" && day in 1..31 -> " июня "
-                date == "07" && day in 1..32 -> " июля "
-                date == "08" && day in 1..32 -> " августа "
-                date == "09" && day in 1..31 -> " сентября "
-                date == "10" && day in 1..32 -> " октября "
-                date == "11" && day in 1..31 -> " ноября "
-                date == "12" && day in 1..32 -> " декабря "
+                date == "01" && day in 1..31 -> " января "
+                date == "02" && day in 1..28 -> " февраля "
+                date == "03" && day in 1..31 -> " марта "
+                date == "04" && day in 1..30 -> " апреля "
+                date == "05" && day in 1..31 -> " мая "
+                date == "06" && day in 1..30 -> " июня "
+                date == "07" && day in 1..31 -> " июля "
+                date == "08" && day in 1..31 -> " августа "
+                date == "09" && day in 1..30 -> " сентября "
+                date == "10" && day in 1..31 -> " октября "
+                date == "11" && day in 1..30 -> " ноября "
+                date == "12" && day in 1..31 -> " декабря "
                 else -> return ""
             }
             res += parts[2].toInt().toString()
