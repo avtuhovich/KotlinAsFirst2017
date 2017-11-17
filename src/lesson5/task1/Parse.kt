@@ -157,6 +157,7 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
+    if (jumps.isEmpty()) return -1
     if (!jumps.matches(Regex("""[ \d\-%\+]*$"""))) return -1
     var maxHigh = -1
     val high = jumps.split(' ')
