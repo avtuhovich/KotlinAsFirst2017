@@ -203,12 +203,13 @@ fun factorize(n: Int): List<Int> {
     var x = n
     var num = 2
     val factorList = mutableListOf<Int>()
-    while (x % num == 0) {
-        factorList.add(num)
-        x /= num
+    while (x != 1) {
+        while (x % num == 0) {
+            factorList.add(num)
+            x /= num
+        }
+        num++
     }
-    num++
-    if (x != 1) factorList.add(x)
     return factorList
 }
 /**

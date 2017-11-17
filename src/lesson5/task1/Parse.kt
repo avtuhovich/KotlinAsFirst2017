@@ -157,14 +157,15 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
+    if (!jumps.matches(Regex("""[ \d\-%\+]*$"""))) return -1
     var maxHigh = -1
-    var high = jumps.split(' ')
-    for (i in 0 until high.size) {
+    val high = jumps.split(' ')
+    for (i in 0 until high.size step 2) {
         if (high[i + 1].contains('+')) {
-            val i = high[i].toInt()
+            val num = high[i].toInt()
+            if (maxHigh < num)
+                maxHigh = num
         }
-        if (maxHigh < i)
-            maxHigh = i
     }
     return maxHigh
 }
@@ -198,9 +199,9 @@ fun firstDuplicateIndex(str: String): Int {
         if (part != word) {
             word = part
             index += 1 + part.length
-        } else index = -1
+        } else return index - part.length - 1
     }
-    return index
+    return -1
 }
 /**
  * Сложная
