@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import java.lang.Math.pow
 
 /**
  * Пример
@@ -167,7 +168,7 @@ fun times(a: List<Double>, b: List<Double>): Double {
 fun polynom(p: List<Double>, x: Double): Double {
     var sum_p = 0.0
     for (i in 0 until p.size) {
-        sum_p += p[i] * Math.pow(x, i.toDouble())
+        sum_p += p[i] * pow(x, i.toDouble())
     }
     return sum_p
 }
@@ -201,17 +202,15 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
 fun factorize(n: Int): List<Int> {
     var x = n
     var num = 2
-    val factorL = mutableListOf<Int>()
-    while (x != 1) {
-        while (x % num == 0) {
-            factorL.add(num)
-            x /= num
-        }
-        num++
+    val factorList = mutableListOf<Int>()
+    while (x % num == 0) {
+        factorList.add(num)
+        x /= num
     }
-    return factorL
+    num++
+    if (x != 1) factorList.add(x)
+    return factorList
 }
-
 /**
  * Сложная
  *
@@ -313,22 +312,22 @@ fun russian(n: Int): String {
     part.reverse()
     val res = mutableListOf<String>()
     var rank = part.size - 1
-    for (ni in part) {
-        val number_i = rank
-        val n1 = ni / 100
-        val n21 = ni % 100
+    for (nI in part) {
+        val numberI = rank
+        val n1 = nI / 100
+        val n21 = nI % 100
         val n2 = n21 / 10
-        val n3 = ni % 10
-        if (ni > 99) res.add(number_hundreds[n1])
+        val n3 = nI % 10
+        if (nI > 99) res.add(number_hundreds[n1])
         if (n21 > 20) {
             res.add(number_dozens[n2])
-            res.add(number[number_i][n3])
+            res.add(number[numberI][n3])
         } else {
             if (n21 > 9) res.add(number1119[n21 - 9])
-            else if (n21 in 1..9) res.add(number[number_i][n3])
+            else if (n21 in 1..9) res.add(number[numberI][n3])
         }
         if (rank == 1) {
-            res.add(thousands(ni))
+            res.add(thousands(nI))
         }
         rank--
     }

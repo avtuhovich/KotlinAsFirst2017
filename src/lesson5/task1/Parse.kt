@@ -67,36 +67,20 @@ fun main(args: Array<String>) {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateStrToDigit(str: String): String {
-    val parts = str.split(" ")
-    var L_date = mutableListOf<String>()
-    if (parts.size == 3) {
-        try {
-            val day = parts[0].toInt()
-            L_date.add(twoDigitStr(day))
-            L_date.add(
-                    when {
-                        parts[1] == "января" && day in 1..31 -> ".01."
-                        parts[1] == "февраля" && day in 1..29 -> ".02."
-                        parts[1] == "марта" && day in 1..31 -> ".03."
-                        parts[1] == "апреля" && day in 1..30 -> ".04."
-                        parts[1] == "мая" && day in 1..31 -> ".05."
-                        parts[1] == "июня" && day in 1..30 -> ".06."
-                        parts[1] == "июля" && day in 1..31 -> ".07."
-                        parts[1] == "августа" && day in 1..31 -> ".08."
-                        parts[1] == "сентября" && day in 1..30 -> ".09."
-                        parts[1] == "октября" && day in 1..31 -> ".10."
-                        parts[1] == "ноября" && day in 1..30 -> ".11."
-                        parts[1] == "декабря" && day in 1..31 -> ".12."
-                        else -> return ""
-                    })
-            L_date.add(parts[2])
-        } catch (e: NumberFormatException) {
-            return ""
-        }
-        return L_date.joinToString("")
-    } else return ""
+    val month = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
+            "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val LDate = str.split(" ").toMutableList()
+    try {
+        if (LDate.size != 3) return ""
+        val action = month.indexOf(LDate[1])
+        if (action == -1) return ""
+        LDate[0] = twoDigitStr(LDate[0].toInt())
+        LDate[1] = twoDigitStr(action + 1)
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    return LDate.joinToString(".")
 }
-
 /**
  *
  * Средняя
@@ -106,34 +90,20 @@ fun dateStrToDigit(str: String): String {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    val parts = digital.split(".")
-    var res = ""
-    if (parts.size == 3) {
-        try {
-            val day = parts[0].toInt()
-            val date = parts[1]
-            res = day.toString()
-            res += when {
-                date == "01" && day in 1..31 -> " января "
-                date == "02" && day in 1..28 -> " февраля "
-                date == "03" && day in 1..31 -> " марта "
-                date == "04" && day in 1..30 -> " апреля "
-                date == "05" && day in 1..31 -> " мая "
-                date == "06" && day in 1..30 -> " июня "
-                date == "07" && day in 1..31 -> " июля "
-                date == "08" && day in 1..31 -> " августа "
-                date == "09" && day in 1..30 -> " сентября "
-                date == "10" && day in 1..31 -> " октября "
-                date == "11" && day in 1..30 -> " ноября "
-                date == "12" && day in 1..31 -> " декабря "
-                else -> return ""
-            }
-            res += parts[2].toInt().toString()
-        } catch (e: NumberFormatException) {
+    val month = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
+            "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val LDate = digital.split(".").toMutableList()
+    val res: Int
+    if (LDate.size != 3) return ""
+    try {
+        res = LDate[1].toInt() - 1
+        if (res !in 0..11) return ""
+    } catch (e: NumberFormatException) {
             return ""
         }
-        return res
-    } else return ""
+    LDate[0] = LDate[0].toInt().toString()
+    LDate[1] = month[res]
+    return LDate.joinToString(" ")
 }
 
 
@@ -186,7 +156,19 @@ fun bestLongJump(jumps: String): Int {
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var maxHigh = -1
+    var high = jumps.split(' ')
+    for (i in 0 until high.size) {
+        if (high[i + 1].contains('+')) {
+            val i = high[i].toInt()
+        }
+        if (maxHigh < i)
+            maxHigh = i
+    }
+    return maxHigh
+}
+
 
 
 /**
@@ -212,7 +194,7 @@ fun plusMinus(expression: String): Int = TODO()
 fun firstDuplicateIndex(str: String): Int {
     var index = 0
     var word = ""
-    for (part in str.toUpperCase().split("")) {
+    for (part in str.toLowerCase().split(' ')) {
         if (part != word) {
             word = part
             index += 1 + part.length
