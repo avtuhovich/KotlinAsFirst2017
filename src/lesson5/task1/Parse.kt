@@ -69,17 +69,17 @@ fun main(args: Array<String>) {
 fun dateStrToDigit(str: String): String {
     val month = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
             "июля", "августа", "сентября", "октября", "ноября", "декабря")
-    val LDate = str.split(" ").toMutableList()
+    val lDate = str.split(" ").toMutableList()
     try {
-        if (LDate.size != 3) return ""
-        val action = month.indexOf(LDate[1])
+        if (lDate.size != 3) return ""
+        val action = month.indexOf(lDate[1])
         if (action == -1) return ""
-        LDate[0] = twoDigitStr(LDate[0].toInt())
-        LDate[1] = twoDigitStr(action + 1)
+        lDate[0] = twoDigitStr(lDate[0].toInt())
+        lDate[1] = twoDigitStr(action + 1)
     } catch (e: NumberFormatException) {
         return ""
     }
-    return LDate.joinToString(".")
+    return lDate.joinToString(".")
 }
 /**
  *
@@ -92,18 +92,18 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val month = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
             "июля", "августа", "сентября", "октября", "ноября", "декабря")
-    val LDate = digital.split(".").toMutableList()
+    val lDate = digital.split(".").toMutableList()
     val res: Int
-    if (LDate.size != 3) return ""
+    if (lDate.size != 3) return ""
     try {
-        res = LDate[1].toInt() - 1
+        res = lDate[1].toInt() - 1
         if (res !in 0..11) return ""
     } catch (e: NumberFormatException) {
             return ""
         }
-    LDate[0] = LDate[0].toInt().toString()
-    LDate[1] = month[res]
-    return LDate.joinToString(" ")
+    lDate[0] = lDate[0].toInt().toString()
+    lDate[1] = month[res]
+    return lDate.joinToString(" ")
 }
 
 
@@ -136,7 +136,6 @@ fun flattenPhoneNumber(phone: String): String {
 fun bestLongJump(jumps: String): Int {
     var max = -1
     if (!jumps.matches(Regex("""^[\d\-% ]{1,}$"""))) -1
-    if (jumps.matches(Regex("""[ \-%]$"""))) -1
     val n = jumps.replace(Regex("""[%\-]"""), "").replace("  ", " ").split(" ")
     n.filter { !it.isEmpty() }.forEach {
         if (!it.all { it.isDigit() }) return -1
@@ -158,7 +157,7 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     if (jumps.isEmpty()) return -1
-    if (!jumps.matches(Regex("""[ \d\-%\+]*$"""))) return -1
+    if (!jumps.matches(Regex("""^[ \d\-%\+]*$"""))) return -1
     var maxHigh = -1
     val high = jumps.split(' ')
     for (i in 0 until high.size step 2) {

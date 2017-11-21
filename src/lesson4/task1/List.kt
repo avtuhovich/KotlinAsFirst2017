@@ -166,11 +166,11 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Значение пустого многочлена равно 0.0 при любом x.
  */
 fun polynom(p: List<Double>, x: Double): Double {
-    var sum_p = 0.0
+    var sumP = 0.0
     for (i in 0 until p.size) {
-        sum_p += p[i] * pow(x, i.toDouble())
+        sumP += p[i] * pow(x, i.toDouble())
     }
-    return sum_p
+    return sumP
 }
 
 /**
@@ -201,16 +201,14 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  */
 fun factorize(n: Int): List<Int> {
     var x = n
-    var num = 2
-    val factorList = mutableListOf<Int>()
-    while (x != 1) {
-        while (x % num == 0) {
-            factorList.add(num)
-            x /= num
+    val factorizeList = mutableListOf<Int>()
+    for (i in 2..(Math.sqrt(x.toDouble())).toInt())
+        while (x % i == 0) {
+            factorizeList.add(i)
+            x /= i
         }
-        num++
-    }
-    return factorList
+    if (x != 1) factorizeList.add(x)
+    return factorizeList
 }
 /**
  * Сложная
@@ -229,17 +227,17 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  */
 fun convert(n: Int, base: Int): List<Int> {
     var x = n
-    val conL = mutableListOf<Int>()
+    val newN = mutableListOf<Int>()
     if (x == 0) {
         return listOf(0)
     } else {
         while (x != 0) {
-            conL.add(x % base)
+            newN.add(x % base)
             x /= base
         }
     }
-    conL.reverse()
-    return conL
+    newN.reverse()
+    return newN
 }
 
 /**
@@ -295,12 +293,12 @@ fun russian(n: Int): String {
             "четыре", "пять", "шесть", "семь", "восемь", "девять"),
             listOf("", "одна", "две", "три", "четыре",
                     "пять", "шесть", "семь", "восемь", "девять"))
-    val number_hundreds = listOf<String>("", "сто", "двести", "триста",
+    val numberHundreds = listOf<String>("", "сто", "двести", "триста",
             "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
     val number1119 = listOf<String>("", "десять", "одиннадцать", "двенадцать",
             "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
             "семнадцать", "восемнадцать", "девятнадцать", "двадцать")
-    val number_dozens = listOf<String>("", "десять", "двадцать", "тридцать",
+    val numberDozens = listOf<String>("", "десять", "двадцать", "тридцать",
             "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
     val part = mutableListOf<Int>()
     var newN = n
@@ -319,9 +317,9 @@ fun russian(n: Int): String {
         val n21 = nI % 100
         val n2 = n21 / 10
         val n3 = nI % 10
-        if (nI > 99) res.add(number_hundreds[n1])
+        if (nI > 99) res.add(numberHundreds[n1])
         if (n21 > 20) {
-            res.add(number_dozens[n2])
+            res.add(numberDozens[n2])
             res.add(number[numberI][n3])
         } else {
             if (n21 > 9) res.add(number1119[n21 - 9])
