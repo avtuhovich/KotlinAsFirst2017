@@ -111,14 +111,14 @@ data class Segment(val begin: Point, val end: Point) {
 fun diameter(vararg points: Point): Segment {
     var pointBegin = Point(0.0, 0.0)
     var pointEnd = Point(0.0, 0.0)
-    var maxLenght = pointBegin.distance(pointEnd)
+    var maxLength = pointBegin.distance(pointEnd)
     if (points.size <= 1) {
         throw IllegalArgumentException("IllegalArgumentException")
     } else {
         for (j in 0 until points.size)
             for (i in (j + 1) until points.size) {
-                if (points[j].distance(points[i]) > maxLenght)
-                    maxLenght = points[j].distance(points[i])
+                if (points[j].distance(points[i]) > maxLength)
+                    maxLength = points[j].distance(points[i])
                 pointBegin = points[j]
                 pointEnd = points[i]
             }
@@ -133,7 +133,8 @@ fun diameter(vararg points: Point): Segment {
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
 fun circleByDiameter(diameter: Segment): Circle =
-        Circle(Point((diameter.begin.x + diameter.end.x) / 2, (diameter.begin.y + diameter.end.y) / 2),
+        Circle(Point((diameter.begin.x + diameter.end.x) / 2,
+                (diameter.begin.y + diameter.end.y) / 2),
                 (diameter.begin.distance(diameter.end)) / 2)
 
 
@@ -176,6 +177,7 @@ class Line private constructor(val b: Double, val angle: Double) {
  */
 fun lineBySegment(s: Segment): Line = TODO()
 
+
 /**
  * Средняя
  *
@@ -188,8 +190,11 @@ fun lineByPoints(a: Point, b: Point): Line = TODO()
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = TODO()
-
+fun bisectorByPoints(a: Point, b: Point): Line {
+    val cut = Point((a.x + b.x) / 2, (a.x + b.y) / 2)
+    val atan = Math.atan((a.x + b.x) / (a.y + b.y) + Math.PI / 2)
+    return Line(cut, atan)
+}
 /**
  * Средняя
  *

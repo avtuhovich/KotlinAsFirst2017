@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import java.lang.Math.pow
+import java.lang.Math.sqrt
 
 /**
  * Пример
@@ -110,7 +111,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     val sqr = v.map { it * it }
-    return Math.sqrt(sqr.sum())
+    return sqrt(sqr.sum())
 }
 
 /**
@@ -202,7 +203,7 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
 fun factorize(n: Int): List<Int> {
     var x = n
     val factorizeList = mutableListOf<Int>()
-    for (i in 2..(Math.sqrt(x.toDouble())).toInt())
+    for (i in 2..(Math.ceil(Math.sqrt(x.toDouble())).toInt()))
         while (x % i == 0) {
             factorizeList.add(i)
             x /= i
@@ -304,7 +305,7 @@ fun russian(n: Int): String {
     var newN = n
     if (newN > 999) {
         val par = newN / 1000
-        part.add(newN - par * 1000)
+        part.add(newN % 1000)
         newN = par
     }
     part.add(newN)

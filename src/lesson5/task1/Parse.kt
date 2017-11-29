@@ -74,8 +74,9 @@ fun dateStrToDigit(str: String): String {
         if (lDate.size != 3) return ""
         val action = month.indexOf(lDate[1])
         if (action == -1) return ""
-        lDate[0] = twoDigitStr(lDate[0].toInt())
-        lDate[1] = twoDigitStr(action + 1)
+        lDate[0] = String.format("%02d", lDate[0].toInt())
+        lDate[1] = String.format("%02d", (action + 1))
+        lDate[2] = lDate[2].toInt().toString()
     } catch (e: NumberFormatException) {
         return ""
     }
@@ -98,11 +99,12 @@ fun dateDigitToStr(digital: String): String {
     try {
         res = lDate[1].toInt() - 1
         if (res !in 0..11) return ""
+        lDate[0] = lDate[0].toInt().toString()
+        lDate[1] = month[res]
+        lDate[2] = lDate[2].toInt().toString()
     } catch (e: NumberFormatException) {
-            return ""
-        }
-    lDate[0] = lDate[0].toInt().toString()
-    lDate[1] = month[res]
+        return ""
+    }
     return lDate.joinToString(" ")
 }
 
@@ -120,8 +122,8 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    if (!phone.matches(Regex("""^\+?[ \d\(\)\-]{1,}$"""))) return ""
-    return phone.replace(Regex("""[ \(\)\-]"""), "")
+    if (!phone.matches(Regex("""^\+?[ \d()\-]+$"""))) return ""
+    return phone.replace(Regex("""[ ()\-]"""), "")
 }
 /**
  * Средняя
@@ -135,8 +137,9 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     var max = -1
-    if (!jumps.matches(Regex("""^[\d\-% ]{1,}$"""))) -1
-    val n = jumps.replace(Regex("""[%\-]"""), "").replace("  ", " ").split(" ")
+    if (!jumps.matches(Regex("""^[\d\-% ]+$"""))) -1
+    val n = jumps.replace(Regex("""[%\-]""")
+            , "").replace("  ", " ").split(" ")
     n.filter { !it.isEmpty() }.forEach {
         if (!it.all { it.isDigit() }) return -1
         if (it.toInt() > max) {
@@ -157,18 +160,24 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     if (jumps.isEmpty()) return -1
-    if (!jumps.matches(Regex("""^[ \d\-%\+]*$"""))) return -1
+    if (!jumps.matches(Regex("""^[ \d\-%+]*$"""))) return -1
     var maxHigh = -1
     val high = jumps.split(' ')
-    for (i in 0 until high.count() step 2) {
-        if (high[i + 1].contains('+')) {
-            val num = high[i].toInt()
-            if (maxHigh < num)
-                maxHigh = num
+    try {
+        for (i in 0 until high.count() step 2) {
+            if (high[i + 1].contains('+')) {
+                val num = high[i].toInt()
+                if (maxHigh < num)
+                    maxHigh = num
+            }
         }
+        return maxHigh
+    } catch (e: NumberFormatException) {
+        return -1
     }
-    return maxHigh
 }
+
+
 
 
 
