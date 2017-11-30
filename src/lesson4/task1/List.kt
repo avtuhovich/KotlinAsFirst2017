@@ -290,16 +290,16 @@ fun roman(n: Int): String = TODO()
  */
 fun russian(n: Int): String {
     if (n == 0) return "ноль"
-    val number = listOf<List<String>>(listOf("", "один", "два", "три",
+    val number = listOf(listOf("", "один", "два", "три",
             "четыре", "пять", "шесть", "семь", "восемь", "девять"),
             listOf("", "одна", "две", "три", "четыре",
                     "пять", "шесть", "семь", "восемь", "девять"))
-    val numberHundreds = listOf<String>("", "сто", "двести", "триста",
+    val numberHundreds = listOf("", "сто", "двести", "триста",
             "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
-    val number1119 = listOf<String>("", "десять", "одиннадцать", "двенадцать",
+    val number1119 = listOf("", "десять", "одиннадцать", "двенадцать",
             "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
             "семнадцать", "восемнадцать", "девятнадцать", "двадцать")
-    val numberDozens = listOf<String>("", "десять", "двадцать", "тридцать",
+    val numberDozens = listOf("", "десять", "двадцать", "тридцать",
             "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
     val part = mutableListOf<Int>()
     var newN = n
@@ -331,7 +331,7 @@ fun russian(n: Int): String {
         }
         rank--
     }
-    return res.filter { it != "" }.joinToString(separator = " ")
+    return res.joinToString(separator = " ")
 }
 
 fun thousands(ni: Int): String {
