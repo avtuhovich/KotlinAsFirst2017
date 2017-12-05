@@ -288,12 +288,20 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
+fun numb(n: Int, r: Boolean): String {
+    val number = listOf("три",
+            "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    return when {
+        n == 0 -> ""
+        n == 1 && r -> "одна"
+        n == 1 && !r -> "один"
+        n == 2 && r -> "две"
+        n == 2 && !r -> "два"
+        else -> number[n - 3]
+    }
+}
 fun russian(n: Int): String {
     if (n == 0) return "ноль"
-    val number = listOf(listOf("", "один", "два", "три",
-            "четыре", "пять", "шесть", "семь", "восемь", "девять"),
-            listOf("", "одна", "две", "три", "четыре",
-                    "пять", "шесть", "семь", "восемь", "девять"))
     val numberHundreds = listOf("", "сто", "двести", "триста",
             "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
     val number1119 = listOf("", "десять", "одиннадцать", "двенадцать",
@@ -321,17 +329,17 @@ fun russian(n: Int): String {
         if (nI > 99) res.add(numberHundreds[n1])
         if (n21 > 20) {
             res.add(numberDozens[n2])
-            res.add(number[numberI][n3])
+            res.add(numb(n3, numberI == 1))
         } else {
             if (n21 > 9) res.add(number1119[n21 - 9])
-            else if (n21 in 1..9) res.add(number[numberI][n3])
+            else if (n21 in 1..9) res.add(numb(n3, numberI == 1))
         }
         if (rank == 1) {
             res.add(thousands(nI))
         }
         rank--
     }
-    return res.joinToString(separator = " ")
+    return res.filter { it != "" }.joinToString(separator = " ")
 }
 
 fun thousands(ni: Int): String {

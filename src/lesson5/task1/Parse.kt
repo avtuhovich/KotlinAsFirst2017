@@ -141,7 +141,7 @@ fun bestLongJump(jumps: String): Int {
     val n = jumps.replace(Regex("""[%\-]""")
             , "").replace("  ", " ").split(" ")
     n.filter { !it.isEmpty() }.forEach {
-        if (!it.all { it.isDigit() }) return -1
+        if (it == "+") return -1
         if (it.toInt() > max) {
             max = it.toInt()
         }
