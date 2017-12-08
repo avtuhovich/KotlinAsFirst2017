@@ -4,6 +4,12 @@ package lesson6.task2
 import java.lang.Math.abs
 import java.lang.Math.max
 
+val delKing = listOf(Pair(1, 1), Pair(1, 0), Pair(1, -1), Pair(0, 1),
+        Pair(0, -1), Pair(-1, 1), Pair(-1, 0), Pair(-1, -1))
+
+val delKnight = listOf(Pair(2, 1), Pair(2, -1), Pair(-2, 1), Pair(-2, -1),
+        Pair(1, 2), Pair(1, -2), Pair(-1, 2), Pair(-1, -2))
+
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
  * Поэтому, обе координаты клетки (горизонталь row, вертикаль column) могут находиться в пределах от 1 до 8.
@@ -205,7 +211,7 @@ fun kingMoveNumber(start: Square, end: Square): Int {
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> = wave(start, end, false, delKing)
 /**
  * Сложная
  *
@@ -229,7 +235,7 @@ fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Пример: knightMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Конь может последовательно пройти через клетки (5, 2) и (4, 4) к клетке (6, 3).
  */
-fun knightMoveNumber(start: Square, end: Square): Int = TODO()
+fun knightMoveNumber(start: Square, end: Square): Int = wave(start, end, true, delKnight).size - 1
 
 /**
  * Очень сложная
@@ -251,4 +257,42 @@ fun knightMoveNumber(start: Square, end: Square): Int = TODO()
  *
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun knightTrajectory(start: Square, end: Square): List<Square> = wave(start, end, false, delKnight)
+
+fun wave(start: Square, end: Square, mode: Boolean, dif: List<Pair<Int, Int>>): List<Square> {
+    //mode - true - просто вернет лист длиной = количество шагов
+    //false - вернуть траекторию
+    val desk = MutableList<MutableList<Int>>(8, { MutableList<Int>(8, { -1 }) })
+    desk[start.row - 1][start.column - 1] = 0
+    var cur = 1
+    var path = mutableListOf(start)
+    var copy = path.toMutableList()
+    while (desk[end.row - 1][end.column - 1] == -1) {
+        for (p in path) {
+            for (d in dif) {
+                val tmp = Square(p.column + d.first, p.row + d.second)
+                if (!tmp.inside() || tmp in path) continue
+                else copy.add(tmp)
+                if (desk[tmp.row - 1][tmp.column - 1] > cur || desk[tmp.row - 1][tmp.column - 1] == -1) desk[tmp.row - 1][tmp.column - 1] = cur
+            }
+        }
+        cur++
+        path = copy.toMutableList()
+    }
+    if (mode) return List(cur, { Square(0, 0) })
+    val res = mutableListOf(end)
+    var curS = end
+    while (curS != start) {
+        for (d in dif) {
+            val tmp = Square(curS.column + d.first, curS.row + d.second)
+            if (!tmp.inside()) continue
+            if (desk[tmp.row - 1][tmp.column - 1] == cur - 1) {
+                curS = tmp
+                res.add(tmp)
+                break
+            }
+        }
+        cur--
+    }
+    return res.reversed()
+}
