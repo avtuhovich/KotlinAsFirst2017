@@ -166,7 +166,7 @@ fun bestHighJump(jumps: String): Int {
     if (!jumps.matches(Regex("""^[ \d\-%+]*$"""))) return -1
     var maxHigh = -1
     val high = jumps.split(' ')
-    try {
+    return try {
         for (i in 0 until high.count() step 2) {
             if (high[i + 1].contains('+')) {
                 val num = high[i].toInt()
@@ -174,16 +174,11 @@ fun bestHighJump(jumps: String): Int {
                     maxHigh = num
             }
         }
-        return maxHigh
+        maxHigh
     } catch (e: NumberFormatException) {
-        return -1
+        -1
     }
 }
-
-
-
-
-
 /**
  * Сложная
  *

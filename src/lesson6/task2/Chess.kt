@@ -262,15 +262,15 @@ fun knightTrajectory(start: Square, end: Square): List<Square> = wave(start, end
 fun wave(start: Square, end: Square, mode: Boolean, dif: List<Pair<Int, Int>>): List<Square> {
     //mode - true - просто вернет лист длиной = количество шагов
     //false - вернуть траекторию
-    val desk = MutableList<MutableList<Int>>(8, { MutableList<Int>(8, { -1 }) })
+    val desk = MutableList(8, { MutableList<Int>(8, { -1 }) })
     desk[start.row - 1][start.column - 1] = 0
     var cur = 1
     var path = mutableListOf(start)
-    var copy = path.toMutableList()
+    val copy = path.toMutableList()
     while (desk[end.row - 1][end.column - 1] == -1) {
-        for (p in path) {
-            for (d in dif) {
-                val tmp = Square(p.column + d.first, p.row + d.second)
+        for ((column, row) in path) {
+            for ((first, second) in dif) {
+                val tmp = Square(column + first, row + second)
                 if (!tmp.inside() || tmp in path) continue
                 else copy.add(tmp)
                 if (desk[tmp.row - 1][tmp.column - 1] > cur || desk[tmp.row - 1][tmp.column - 1] == -1) desk[tmp.row - 1][tmp.column - 1] = cur
@@ -283,8 +283,8 @@ fun wave(start: Square, end: Square, mode: Boolean, dif: List<Pair<Int, Int>>): 
     val res = mutableListOf(end)
     var curS = end
     while (curS != start) {
-        for (d in dif) {
-            val tmp = Square(curS.column + d.first, curS.row + d.second)
+        for ((first, second) in dif) {
+            val tmp = Square(curS.column + first, curS.row + second)
             if (!tmp.inside()) continue
             if (desk[tmp.row - 1][tmp.column - 1] == cur - 1) {
                 curS = tmp
