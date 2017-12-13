@@ -301,4 +301,49 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    val result = MutableList(cells, { 0 })
+    if (commands.isEmpty()) return result
+    if (!commands.matches(Regex("""[\[><\+\-\] ]+"""))) throw IllegalArgumentException()
+    if (commands.count { it == '[' } != commands.count { it == ']' }) throw IllegalArgumentException()
+    val jAdr = mutableListOf<Pair<Int, Int>>()
+    var rec = 0
+    for (i in 0 until commands.length) {
+        if (commands[i] == '[') {
+            rec++
+            var tmp = i + 1
+            while (rec > 0 && tmp < commands.length) {
+                if (commands[tmp] == '[') rec++
+                if (commands[tmp] == ']') rec--
+                tmp++
+            }
+            if (rec != 0) throw IllegalArgumentException()
+            jAdr.add(Pair(i, tmp - 1))
+        }
+    }
+    var cal = cells / 2
+    var pc = 0
+    var lim = 0
+    while (lim < limit && pc < commands.length) {
+        when (commands[pc]) {
+            '+' -> result[cal]++
+            '>' -> cal++
+            '<' -> cal--
+            '-' -> result[cal]--
+            '[' ->
+                if (result[cal] == 0) {
+                    pc = jAdr.find { it.first == pc }?.second!!
+                }
+            ']' ->
+                if (result[cal] != 0) {
+                    pc = jAdr.find { it.second == pc }?.first!!
+                }
+            ' ' -> {
+            }
+            else -> throw IllegalArgumentException()
+        }
+        if (cal !in 0 until cells) throw IllegalStateException()
+        lim++; pc++
+    }
+    return result
+}
