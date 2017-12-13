@@ -122,11 +122,10 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    val phoneFilter = phone.filter { it != ' ' && it != '-' }
-    val phoneNum = Regex("""(?:\+\d+)?(?:\(\d+\))?\d+""")
-    if (!phoneNum.matches(phoneFilter)) return ""
-    return phoneFilter.filter { it !in '('..')' }
+    if (!phone.matches(Regex("""^\+?[ \d()\-]+$"""))) return ""
+    return phone.replace(Regex("""[ ()\-]"""), "")
 }
+
 
 /**
  * Средняя
@@ -188,7 +187,27 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val sums = Regex("""(?:(\d+\s+[-+]\s+)+)?\d+""")
+    try {
+        if (!sums.matches(expression)) {
+            throw IllegalArgumentException("IllegalArgumentException")
+        } else {
+            val parts = expression.split(" ")
+            var sum = parts[0].toInt()
+            for (i in 0..parts.size - 3 step 2) {
+                if (parts[i + 1] == "+") {
+                    sum += parts[i + 2].toInt()
+                } else {
+                    sum -= parts[i + 2].toInt()
+                }
+            }
+            return sum
+        }
+    } catch (e: NumberFormatException) {
+        throw IllegalArgumentException("IllegalArgumentException")
+    }
+}
 
 /**
  * Сложная
@@ -221,7 +240,17 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val matchResult = Regex("""((.+ ([0-9]+\.*[0-9]*));?)+""").findAll(description)
+    if (matchResult.count() == 0) return ""
+    val res = mutableListOf<Pair<String, Double>>()
+    val work = description.split(";")
+    for (i in work) {
+        val tmp = i.trim().split(' ')
+        res.add(Pair(tmp[0], tmp[1].toDouble()))
+    }
+    return res.maxBy { it.second }!!.first
+}
 
 /**
  * Сложная

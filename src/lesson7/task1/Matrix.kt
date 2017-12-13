@@ -38,32 +38,81 @@ interface Matrix<E> {
  * height = высота, width = ширина, e = чем заполнить элементы.
  * Бросить исключение IllegalArgumentException, если height или width <= 0.
  */
-fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> = TODO()
+fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> {
+    if (height <= 0 || width <= 0)
+        throw IllegalArgumentException("IllegalArgumentException")
+    return MatrixImpl(height, width, e)
+}
+
+fun <E> createMatrix(height: Int, width: Int, values: List<List<E>>): Matrix<E> {
+    val matrix = createMatrix<E>(height, width, values[0][0])
+    for (row in 0 until height) {
+        for (column in 0 until width) {
+            matrix[row, column] = values[row][column]
+        }
+    }
+    return matrix
+}
+
 
 /**
  * Средняя сложность
- *
  * Реализация интерфейса "матрица"
  */
-class MatrixImpl<E> : Matrix<E> {
-    override val height: Int = TODO()
+class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : Matrix<E> {
+    private val matrixList = mutableListOf<E>()
 
-    override val width: Int = TODO()
+    init {
+        for (it in 0 until height)
+            matrixList.add(e)
+    }
 
-    override fun get(row: Int, column: Int): E  = TODO()
+    override fun get(row: Int, column: Int): E = matrixList[row * width + column]
 
-    override fun get(cell: Cell): E  = TODO()
+    override fun get(cell: Cell): E = matrixList[cell.row * width + cell.column]
 
     override fun set(row: Int, column: Int, value: E) {
-        TODO()
+        matrixList[row * width + column] = value
     }
 
     override fun set(cell: Cell, value: E) {
-        TODO()
+        matrixList[cell.row * width + cell.column] = value
     }
 
-    override fun equals(other: Any?) = TODO()
+    override fun equals(other: Any?): Boolean {
+        if (!(other is Matrix<*> &&
+                height == other.height &&
+                width == other.width)) return false
+        (0 until this.height).forEach { row ->
+            (0 until this.width)
+                    .filter { this[row, it] != other[row, it] }
+                    .forEach { return false }
+        }
+        return true
+    }
 
-    override fun toString(): String = TODO()
+
+    override fun hashCode(): Int {
+        var result = height
+        result = result * 31 + width
+        result = result * 31 + matrixList.hashCode()
+        return result
+    }
+
+    override fun toString(): String {
+        val sb = StringBuilder()
+        sb.append("[")
+        for (row in 0 until height) {
+            sb.append("[")
+            for (column in 0 until width) {
+                sb.append(this[row, column])
+                if (column != width - 1) sb.append(" ")
+            }
+            if (row != height - 1) sb.append("]\n") else sb.append("]")
+        }
+        sb.append("]")
+        return "$sb"
+    }
 }
+
 

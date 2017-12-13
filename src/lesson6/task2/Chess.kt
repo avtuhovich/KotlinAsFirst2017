@@ -47,7 +47,7 @@ fun square(notation: String): Square =
         if (notation.length != 2 || notation[0] !in 'a'..'h' || notation[1] !in '1'..'8')
             throw IllegalArgumentException("IllegalArgumentException")
         else
-            Square((notation[0].toInt() + 1 - 'a'.toInt()), notation[1].toString().toInt())
+            Square((notation[0] + 1 - 'a'), notation[1].toString().toInt())
 
 /**
  * Простая
@@ -211,7 +211,7 @@ fun kingMoveNumber(start: Square, end: Square): Int {
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = wave(start, end, false, delKing)
+fun kingTrajectory(start: Square, end: Square): List<Square> = wave(start, end, false, delKing).reversed()
 /**
  * Сложная
  *
@@ -273,7 +273,9 @@ fun wave(start: Square, end: Square, mode: Boolean, dif: List<Pair<Int, Int>>): 
                 val tmp = Square(column + first, row + second)
                 if (!tmp.inside() || tmp in path) continue
                 else copy.add(tmp)
-                if (desk[tmp.row - 1][tmp.column - 1] > cur || desk[tmp.row - 1][tmp.column - 1] == -1) desk[tmp.row - 1][tmp.column - 1] = cur
+                if (desk[tmp.row - 1][tmp.column - 1] > cur
+                        || desk[tmp.row - 1][tmp.column - 1] == -1)
+                    desk[tmp.row - 1][tmp.column - 1] = cur
             }
         }
         cur++
