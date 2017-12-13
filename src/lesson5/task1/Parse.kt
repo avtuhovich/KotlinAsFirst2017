@@ -244,8 +244,8 @@ fun mostExpensive(description: String): String {
     val matchResult = Regex("""((.+ ([0-9]+\.*[0-9]*));?)+""").findAll(description)
     if (matchResult.count() == 0) return ""
     val res = mutableListOf<Pair<String, Double>>()
-    val work = description.split(";")
-    for (i in work) {
+    val price = description.split(";")
+    for (i in price) {
         val tmp = i.trim().split(' ')
         res.add(Pair(tmp[0], tmp[1].toDouble()))
     }

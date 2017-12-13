@@ -79,17 +79,7 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
         matrixList[cell.row * width + cell.column] = value
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (!(other is Matrix<*> &&
-                height == other.height &&
-                width == other.width)) return false
-        (0 until this.height).forEach { row ->
-            (0 until this.width)
-                    .filter { this[row, it] != other[row, it] }
-                    .forEach { return false }
-        }
-        return true
-    }
+    override fun equals(other: Any?): Boolean = TODO()
 
 
     override fun hashCode(): Int {
@@ -99,20 +89,7 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
         return result
     }
 
-    override fun toString(): String {
-        val sb = StringBuilder()
-        sb.append("[")
-        for (row in 0 until height) {
-            sb.append("[")
-            for (column in 0 until width) {
-                sb.append(this[row, column])
-                if (column != width - 1) sb.append(" ")
-            }
-            if (row != height - 1) sb.append("]\n") else sb.append("]")
-        }
-        sb.append("]")
-        return "$sb"
-    }
+    override fun toString(): String = TODO()
 }
 
 
