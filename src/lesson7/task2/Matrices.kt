@@ -59,7 +59,47 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix<Int>(height, width, 1)
+    var right = width
+    var down = height
+    var left = 0
+    var top = 0
+    var count = 1
+    var line = 0
+    var column = 0
+    while (count <= width * height) {
+        if (right - left <= 0) return matrix
+        for (i in left until right) {
+            column = i
+            matrix[line, column] = count
+            count++
+        }
+        top++
+        if (down - top <= 0) return matrix
+        for (i in top until down) {
+            line = i
+            matrix[line, column] = count
+            count++
+        }
+        right--
+        if (right - left <= 0) return matrix
+        for (i in right - 1 downTo left) {
+            column = i
+            matrix[line, column] = count
+            count++
+        }
+        down--
+        if (down - top <= 0) return matrix
+        for (i in top - 1 downTo down) {
+            line = i
+            matrix[line, column] = count
+            count++
+        }
+        left++
+    }
+    return matrix
+}
 
 /**
  * Сложная
@@ -75,7 +115,49 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix<Int>(height, width, 1)
+    var right = width
+    var down = height
+    var left = 0
+    var top = 0
+    var count = 1
+    var line = 0
+    var column = 0
+    var resOfMatrix = 1
+    while (count <= width * height) {
+        if (right - left <= 0) return matrix
+        for (i in left until right) {
+            column = i
+            matrix[line, column] = resOfMatrix
+            count++
+        }
+        top++
+        if (down - top <= 0) return matrix
+        for (i in top until down) {
+            line = i
+            matrix[line, column] = resOfMatrix
+            count++
+        }
+        right--
+        if (right - left <= 0) return matrix
+        for (i in right - 1 downTo left) {
+            column = i
+            matrix[line, column] = resOfMatrix
+            count++
+        }
+        down--
+        if (down - top <= 0) return matrix
+        for (i in top - 1 downTo down) {
+            line = i
+            matrix[line, column] = resOfMatrix
+            count++
+        }
+        left++
+        resOfMatrix++
+    }
+    return matrix
+}
 
 /**
  * Сложная
@@ -103,7 +185,16 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.height != matrix.width) throw IllegalArgumentException("IllegalArgumentException")
+    val res = createMatrix(matrix.height, matrix.width, matrix[0, 0])
+    for (i in 0 until matrix.height) {
+        for (j in 0 until matrix.width) {
+            res[i, j] = matrix[matrix.height - j - 1, i]
+        }
+    }
+    return res
+}
 
 /**
  * Сложная

@@ -63,7 +63,7 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
     private val matrixList = mutableListOf<E>()
 
     init {
-        for (it in 0 until height)
+        for (it in 0 until height * width)
             matrixList.add(e)
     }
 
@@ -79,7 +79,11 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
         matrixList[cell.row * width + cell.column] = value
     }
 
-    override fun equals(other: Any?): Boolean = TODO()
+    override fun equals(other: Any?): Boolean {
+        if (!(other is Matrix<*> && height == other.height &&
+                width == other.width)) return false
+        return true
+    }
 
 
     override fun hashCode(): Int {
@@ -89,7 +93,20 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
         return result
     }
 
-    override fun toString(): String = TODO()
+    override fun toString(): String {
+        val sb = StringBuilder()
+        sb.append("[")
+        for (row in 0 until height) {
+            sb.append("[")
+            for (column in 0 until width) {
+                sb.append(this[row, column])
+                if (column != width - 1) sb.append(" ")
+            }
+            sb.append("]")
+        }
+        sb.append("]")
+        return "$sb"
+    }
 }
 
 

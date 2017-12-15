@@ -1,5 +1,4 @@
 package lesson7.task2
-
 import lesson7.task1.Matrix
 import lesson7.task1.createMatrix
 import org.junit.jupiter.api.Assertions.*
