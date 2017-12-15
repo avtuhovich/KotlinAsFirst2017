@@ -60,7 +60,7 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  *  9  8  7  6
  */
 fun generateSpiral(height: Int, width: Int): Matrix<Int> {
-    val matrix = createMatrix<Int>(height, width, 1)
+    val res = createMatrix<Int>(height, width, 1)
     var right = width
     var down = height
     var left = 0
@@ -69,36 +69,36 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     var line = 0
     var column = 0
     while (count <= width * height) {
-        if (right - left <= 0) return matrix
+        if (right - left <= 0) return res
         for (i in left until right) {
             column = i
-            matrix[line, column] = count
+            res[line, column] = count
             count++
         }
         top++
-        if (down - top <= 0) return matrix
+        if (down - top <= 0) return res
         for (i in top until down) {
             line = i
-            matrix[line, column] = count
+            res[line, column] = count
             count++
         }
         right--
-        if (right - left <= 0) return matrix
+        if (right - left <= 0) return res
         for (i in right - 1 downTo left) {
             column = i
-            matrix[line, column] = count
+            res[line, column] = count
             count++
         }
         down--
-        if (down - top <= 0) return matrix
-        for (i in top - 1 downTo down) {
+        if (down - top <= 0) return res
+        for (i in down - 1 downTo top) {
             line = i
-            matrix[line, column] = count
+            res[line, column] = count
             count++
         }
         left++
     }
-    return matrix
+    return res
 }
 
 /**
@@ -116,7 +116,7 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
  *  1  1  1  1  1  1
  */
 fun generateRectangles(height: Int, width: Int): Matrix<Int> {
-    val matrix = createMatrix<Int>(height, width, 1)
+    val res = createMatrix<Int>(height, width, 1)
     var right = width
     var down = height
     var left = 0
@@ -124,41 +124,40 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> {
     var count = 1
     var line = 0
     var column = 0
-    var resOfMatrix = 1
+    var index = 1
     while (count <= width * height) {
-        if (right - left <= 0) return matrix
+        if (right - left <= 0) return res
         for (i in left until right) {
             column = i
-            matrix[line, column] = resOfMatrix
+            res[line, column] = index
             count++
         }
         top++
-        if (down - top <= 0) return matrix
+        if (down - top <= 0) return res
         for (i in top until down) {
             line = i
-            matrix[line, column] = resOfMatrix
+            res[line, column] = index
             count++
         }
         right--
-        if (right - left <= 0) return matrix
+        if (right - left <= 0) return res
         for (i in right - 1 downTo left) {
             column = i
-            matrix[line, column] = resOfMatrix
+            res[line, column] = index
             count++
         }
         down--
-        if (down - top <= 0) return matrix
-        for (i in top - 1 downTo down) {
+        if (down - top <= 0) return res
+        for (i in down - 1 downTo top) {
             line = i
-            matrix[line, column] = resOfMatrix
+            res[line, column] = index
             count++
         }
         left++
-        resOfMatrix++
+        index++
     }
-    return matrix
+    return res
 }
-
 /**
  * Сложная
  *
@@ -209,8 +208,26 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
  * 1 2 3
  * 3 1 2
  */
-fun isLatinSquare(matrix: Matrix<Int>): Boolean = TODO()
-
+fun isLatinSquare(matrix: Matrix<Int>): Boolean {
+    if (matrix.height != matrix.width) throw IllegalArgumentException("false")
+    for (i in 0 until matrix.width) {
+        val latin = mutableListOf<Int>()
+        for (j in 0 until matrix.height) {
+            if (matrix[j, i] !in latin && matrix[j, i] in 1..matrix.height)
+                latin.add(matrix[j, i])
+            else return false
+        }
+    }
+    for (j in 0 until matrix.width) {
+        val latin = mutableListOf<Int>()
+        for (i in 0 until matrix.height) {
+            if (matrix[j, i] !in latin && matrix[j, i] in 1..matrix.height)
+                latin.add(matrix[j, i])
+            else return false
+        }
+    }
+    return true
+}
 /**
  * Средняя
  *

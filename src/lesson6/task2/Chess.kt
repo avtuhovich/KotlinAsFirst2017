@@ -211,7 +211,7 @@ fun kingMoveNumber(start: Square, end: Square): Int {
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = wave(start, end, false, delKing).reversed()
+fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
 /**
  * Сложная
  *
@@ -235,7 +235,7 @@ fun kingTrajectory(start: Square, end: Square): List<Square> = wave(start, end, 
  * Пример: knightMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Конь может последовательно пройти через клетки (5, 2) и (4, 4) к клетке (6, 3).
  */
-fun knightMoveNumber(start: Square, end: Square): Int = wave(start, end, true, delKnight).size - 1
+fun knightMoveNumber(start: Square, end: Square): Int = TODO()
 
 /**
  * Очень сложная
