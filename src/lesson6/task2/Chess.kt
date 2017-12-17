@@ -257,7 +257,8 @@ fun knightMoveNumber(start: Square, end: Square): Int = TODO()
  *
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun knightTrajectory(start: Square, end: Square): List<Square> = wave(start, end, false, delKnight)
+fun knightTrajectory(start: Square, end: Square): List<Square>
+        = wave(start, end, false, delKnight)
 
 fun wave(start: Square, end: Square, mode: Boolean, dif: List<Pair<Int, Int>>): List<Square> {
     //mode - true - просто вернет лист длиной = количество шагов
